@@ -1,0 +1,53 @@
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+        int len = s.length();
+        int subLen = 0;
+        for (int i = 0; i < len / 2; ++i) {
+            subLen++;
+            String beginSubStr = s.substring(0,subLen);
+            System.out.println("BEGIN    " + beginSubStr);            
+            int match = len / subLen - 1;
+            if (len % subLen == 0) {
+                for (int j = subLen; j < len; j += subLen) {
+                String currSubStr = s.substring(j, j + subLen);
+                System.out.println(currSubStr);
+                if (beginSubStr.equals(currSubStr)){
+                    match--;
+                }
+                else {
+                    break;
+                }
+            }
+                
+            }
+            if (match == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+        int i = 0;
+        int j = 1;
+        int len = s.length();
+        int [] kmpArr = new int[len];
+        while (j < len) {
+            if (s.charAt(i) == s.charAt(j)) {       // match
+                i++;
+                kmpArr[j] = i;
+                j++;
+            }
+            else if (i != 0) {          // mismatch after previous matched characters
+                i = kmpArr[i -1]; 
+            }
+            else {                                  // first char mismatch
+                j++;
+            }
+        }
+        return kmpArr[len-1] != 0 && len % (len - kmpArr[len - 1]) == 0;
+        
+    }
+}   // kmp

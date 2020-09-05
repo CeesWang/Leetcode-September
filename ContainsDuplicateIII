@@ -1,0 +1,14 @@
+class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; ++i) {
+            map.put(i, nums[i]);    // put index, value pair in map
+        }
+        for (int i = 1; i < nums.length; ++i) {
+            int prevValue = map.get(i - 1);      // prev value
+            int prevIdx = i - 1;
+            if (t <= Math.abs(prevValue - nums[i]) || k <= Math.abs(prevIdx - i)) return true;
+        }
+        return false;
+    }
+}
