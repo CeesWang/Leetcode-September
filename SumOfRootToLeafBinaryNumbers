@@ -53,4 +53,42 @@ class Solution {
         }
         return 0;
     }
+}  37/ 63
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int sumRootToLeaf(TreeNode root) {
+        ArrayList<String> list = new ArrayList<>();
+        iterateTree(root, list, "");
+        int sum = 0; 
+        
+        for (int i = 0; i < list.size(); ++i) {
+            sum += Integer.parseInt(list.get(i), 2);
+        }
+        return sum;
+    }
+    
+    public void iterateTree(TreeNode node, ArrayList<String> list, String s) {
+        if (node != null) {
+            if (node.left == null && node.right == null) {
+                list.add(s + node.val);
+            }
+            iterateTree(node.left, list, s + node.val);
+            iterateTree(node.right, list, s + node.val);
+        }
+    }
 }
