@@ -15,75 +15,19 @@
  */
 class Solution {
     public int sumRootToLeaf(TreeNode root) {
-        ArrayList<Integer> list = new ArrayList<>();
-        int idx = list.size() - 1;
-        iterateTree(root, list, 0);
-        int sum = 0;
-        // System.out.println(Arrays.toString(list.toArray()));
-        int pow = 1;
-        for (int i = list.size() - 1; i >= 0; --i) {
-            int num = list.get(i);
-            if (num != 0) {
-                for (int j = 0; j < num; ++j) {
-                    sum += pow;
-                }
-            }
-            pow *= 2;
-        }
-        return sum;
-    }
-    
-    public int iterateTree(TreeNode node, ArrayList<Integer> list, int level) {
-        if (node != null) {
-            if (level == list.size()) {
-                list.add(0);
-            }
-            if (node.left == null && node.right == null) {
-                if (node.val == 1) {
-                    list.set(level, list.get(level) + 1);                
-                }
-                return 1;
-            }
-            int children = iterateTree(node.left, list, level + 1) + iterateTree(node.right, list, level + 1);
-            if (node.val == 1) {
-                list.set(level, list.get(level) + children);                
-            }
-            // System.out.println(level + "   " + list.size() + "    " + children);
-            return children;
-        }
-        return 0;
-    }
-}  37/ 63
-
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
-class Solution {
-    public int sumRootToLeaf(TreeNode root) {
         int[] sum = {0};
-        iterateTree(root, sum, "");
+        iterateTree(root, sum, 0);
         return sum[0];
     }
     
-    public void iterateTree(TreeNode node, int[] sum,  String s) {
+    public void iterateTree(TreeNode node, int[] sum, int currTotal) {
         if (node != null) {
             if (node.left == null && node.right == null) {
-                sum[0] += (Integer.parseInt(s + node.val,2));
+                sum[0] += (currTotal * 2 + node.val); 
             }
-            iterateTree(node.left, sum, s + node.val);
-            iterateTree(node.right, sum, s + node.val);
+            int total = currTotal * 2 + node.val;
+            iterateTree(node.left, sum, total);
+            iterateTree(node.right, sum, total);
         }
     }
 }
