@@ -1,0 +1,28 @@
+class Solution {
+    public int maxProduct(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int ans = Integer.MIN_VALUE;
+        int[] maxArr = new int[nums.length];
+        int currSum = nums[0];
+        maxArr[0] = nums[0];
+        for (int i = 1; i < nums.length; ++i) {
+            int num = nums[i];
+            maxArr[i] = num * maxArr[i -1];
+            currSum = Math.max(num, currSum * num);
+            currSum = Math.max(maxArr[i], currSum);
+            ans = Math.max(currSum, ans);
+        }
+        currSum = nums[nums.length -1];
+        maxArr[nums.length - 1] = nums[nums.length - 1];
+        for (int i = nums.length - 2; i >= 0; --i) {
+            int num = nums[i];
+            maxArr[i] = num * maxArr[i + 1];
+            currSum = Math.max(num, currSum * num);
+            currSum = Math.max(maxArr[i], currSum);
+            ans = Math.max(currSum, ans);
+        }
+        return ans;
+    }
+}
