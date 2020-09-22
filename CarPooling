@@ -1,0 +1,25 @@
+class Solution {
+    public boolean carPooling(int[][] trips, int capacity) {
+        PriorityQueue<int []> pickUpQueue = new PriorityQueue<>((a,b) -> a[1] - b[1]);
+        PriorityQueue<int []> dropOffQueue = new PriorityQueue<>((a,b) -> a[2] - b[2]);
+        for (int i = 0; i < trips.length; ++i) {
+            pickUpQueue.add(trips[i]);
+            dropOffQueue.add(trips[i]);
+        }
+        
+        while (!pickUpQueue.isEmpty()) {
+            int [] currTrip = pickUpQueue.poll();
+            capacity -= currTrip[0];
+            if (capacity < 0) {
+                return false;
+            }
+            if (currTrip[2] )
+            if (!pickUpQueue.isEmpty()) {
+                
+            }
+                
+            
+        }
+        return true;
+    }
+}
