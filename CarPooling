@@ -6,19 +6,17 @@ class Solution {
             pickUpQueue.add(trips[i]);
             dropOffQueue.add(trips[i]);
         }
-        
         while (!pickUpQueue.isEmpty()) {
             int [] currTrip = pickUpQueue.poll();
-            capacity -= currTrip[0];
+            if (currTrip[1] >= dropOffQueue.peek()[2]) {
+                while (currTrip[1] >= dropOffQueue.peek()[2]) {
+                    capacity += dropOffQueue.poll()[0];
+                }                                
+            }
+            capacity -= currTrip[0];       
             if (capacity < 0) {
                 return false;
             }
-            if (currTrip[2] )
-            if (!pickUpQueue.isEmpty()) {
-                
-            }
-                
-            
         }
         return true;
     }
