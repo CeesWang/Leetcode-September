@@ -29,11 +29,50 @@ class Solution {
         return -1;
     }
 }
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int len = gas.length;
+        int[] diffArr = new int [len];
+        PriorityQueue<int []> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]);
+        int gasSum = 0;
+        int costSum = 0;
+        for (int i = 0; i < len; ++i) {
+            int diff = gas[i] - cost[i];
+            if (diff >= 0) {
+                pq.add(new int [] {i, diff});
+            }
+            gasSum += gas[i];
+            costSum += cost[i];
+            diffArr[i] = diff;
+            
+        }
+        if (gasSum - costSum < 0) {
+            return -1;
+        }        
+        while (!pq.isEmpty()) {
+            int [] entry = pq.poll();
+            int startIdx = entry[0];
+            int idx = startIdx + 1;
+            int tank = entry[1];
+            if (tank >= 0) {
+
+                while (tank >= 0 && (idx % len) != startIdx) {
+                    tank += diffArr[idx % len];
+                    idx++;
+                }
+                if (tank >= 0 && idx % len == startIdx) {
+                    return startIdx;
+                }
+            }
+        }
+        return -1;
+    }
+}
 
 // gas  = [1,2,3,4,5]
 // cost = [3,4,5,1,2]
 // diff = [-2,-2,2,3,3]
 
-// gas = [3, 2, 1]
-// cost = [2, 3, 1]
-// diff = [1, -1 0]
+// gas = [10, 1, 2, 3, 4]
+// cost = [1, 9]
+// diff = [9, -1 0]
