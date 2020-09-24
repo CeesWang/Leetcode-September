@@ -2,14 +2,14 @@ class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int len = gas.length;
         for (int i = 0; i < len; ++i) {
-            int idx = (i + 1) % len;
+            int idx = i + 1;
             int tank = gas[i] - cost[i];
-            if (tank > 0) {
-                while (tank > 0 && idx != i) {
-                    idx++;
+            if (tank >= 0) {
+                while (tank >= 0 && (idx % len) != i) {
                     tank += (gas[idx % len]- cost[idx % len]);
+                    idx++;
                 }
-                if (idx == i) {
+                if (tank >= 0 && idx % len == i) {
                     return i;
                 }
             }
