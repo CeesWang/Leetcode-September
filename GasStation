@@ -1,12 +1,24 @@
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int len = gas.length;
+        int[] diffArr = new int [len];
+        int gasSum = 0;
+        int costSum = 0;
+        for (int i = 0; i < len; ++i) {
+            gasSum += gas[i];
+            costSum += cost[i];
+            diffArr[i] = gas[i] - cost[i];
+        }
+        if (gasSum - costSum < 0) {
+            return -1;
+        }
+        
         for (int i = 0; i < len; ++i) {
             int idx = i + 1;
-            int tank = gas[i] - cost[i];
+            int tank = diffArr[i];
             if (tank >= 0) {
                 while (tank >= 0 && (idx % len) != i) {
-                    tank += (gas[idx % len]- cost[idx % len]);
+                    tank += diffArr[idx % len];
                     idx++;
                 }
                 if (tank >= 0 && idx % len == i) {
@@ -20,3 +32,8 @@ class Solution {
 
 // gas  = [1,2,3,4,5]
 // cost = [3,4,5,1,2]
+// diff = [-2,-2,2,3,3]
+
+// gas = [3, 2, 1]
+// cost = [2, 3, 1]
+// diff = [1, -1 0]
