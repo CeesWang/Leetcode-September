@@ -1,0 +1,45 @@
+class Solution {
+    public String largestNumber(int[] nums) {
+        int len = nums.length;
+        if (len  == 0) {
+            return "";
+        }
+        String [] sArr = new String[len];
+        int [] iArr = new int[len];
+        StringBuilder sb = new StringBuilder();
+        int longestLength = 0;
+        PriorityQueue<Entry> pq = new PriorityQueue<>((a,b) -> a.i == b.i ? a.s.length() - b.s.length() : b.i - a.i);
+        for (int i = 0; i < len; ++i) {
+            sArr[i] = Integer.toString(nums[i]);
+            iArr[i] = nums[i];
+            int length = sArr[i].length();
+            if (length > longestLength) {
+                longestLength = length;
+            }
+        }
+        for (int i = 0; i < len; ++i) {
+            int length = sArr[i].length();
+            while (length < longestLength) {
+                iArr[i] *= 10; 
+                ++length;
+            }
+            Entry e = new Entry(sArr[i],iArr[i]);
+            pq.add(e);
+        }
+        
+        while (!pq.isEmpty()) {
+            sb.append(pq.poll().s);
+        }
+        
+        return sb.toString();
+    }
+    
+    public class Entry {
+        String s;
+        int i;
+        Entry(String s, int i) {
+            this.s = s;
+            this.i = i;
+        }
+    } 
+}
