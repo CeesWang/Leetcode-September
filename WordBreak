@@ -1,0 +1,25 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> set = new HashSet<>();
+        int longestWord = 0;
+        int shortestWord = wordDict.get(0).length();
+        for (String word : wordDict) {
+            longestWord = Math.max(longestWord, word.length());
+            shortestWord = Math.min(shortestWord, word.length());
+            set.add(word);
+        }
+        return inDictionary(s, s.substring(0, shortestWord), set, shortestWord, longestWord);
+    }
+    
+    public boolean inDictionary (String word, String wordBreak, Set<String> set, int s, int l) {
+        System.out.println(word + "     " + wordBreak);
+        if (wordBreak.length() > l || wordBreak.length() < s) {
+            return false;
+        }
+        if (word.length() == 0) {       // 
+            return set.contains(wordBreak) ? true : false;
+        }
+        if ()
+    }
+        
+}
